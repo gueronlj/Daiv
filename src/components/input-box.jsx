@@ -8,8 +8,10 @@ const InputBox  = () => {
   const [userPrompt, setUserPrompt] = useState(``)
   const [daivResponse, setDaivResponse] = useState(``)
   const [totalTokens, setTotalTokens] = useState(0)
+  const [loading, setLoading] = useState(false)
 
   const makeRequest = async() => {
+    setLoading(true)
     const config = new Configuration({
       apiKey: apiKey
     })
@@ -19,12 +21,13 @@ const InputBox  = () => {
       messages: [
         {role: 'user', content: userPrompt},
       ],
-      max_tokens: 200,
+      max_tokens: 500,
       temperature: 0,
     })
     console.log(response.data);
     setDaivResponse(response.data.choices[0].message.content)
     setTotalTokens(response.data.usage.total_tokens)
+    setLoading(false)
   }
 
   const handleInput = (e) => {
@@ -36,13 +39,17 @@ const InputBox  = () => {
     makeRequest()
   }
 
-  return(<>
+  return(
+    <>
       <form onSubmit={handleSubmit}>
         <textarea onChange={handleInput}/>
         <button type='submit'>Submit</button>
       </form>
-      <p>{daivResponse}</p>
-      <p>Total tokens used: {totalTokens}</p>
-  </>)
+      {loading?
+        <p>Let me think...</p>:<p>{daivResponse}</p>
+      }
+      <p>Tokens used: {totalTokens}</p>
+    </>
+  )
 }
 export default InputBox;
