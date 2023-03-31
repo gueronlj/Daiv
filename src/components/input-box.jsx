@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Configuration, OpenAIApi } from 'openai';
 
-const InputBox  = () => {
+
+const InputBox  = (props) => {
   const apiKey = import.meta.env.VITE_API_KEY
   const orgId = import.meta.env.VITE_ORG_ID
   const [userPrompt, setUserPrompt] = useState(``)
-  const [daivResponse, setDaivResponse] = useState(``)
-  const [usageStats, setUsageStats] = useState(null)
-  const [loading, setLoading] = useState(false)
   const URL = `http://localhost:3000`
 
   const writeToLog = async (costObj, promptObj) => {
@@ -29,7 +27,7 @@ const InputBox  = () => {
   }
 
   const makeRequest = async() => {
-    setLoading(true)
+    props.setLoading(true)
     const config = new Configuration({
       apiKey: apiKey
     })
@@ -43,11 +41,11 @@ const InputBox  = () => {
     }
     const openai = new OpenAIApi(config)
     const response = await openai.createChatCompletion(promptObj)
-    setDaivResponse(response.data.choices[0].message.content)
+    props.setDaivResponse(response.data.choices[0].message.content)
     console.log(response.data.usage);
-    setUsageStats(response.data.usage)
+    props.setUsageStats(response.data.usage)
     writeToLog(response.data.usage, promptObj)
-    setLoading(false)
+    props.setLoading(false)
   }
 
   const handleInput = (e) => {
@@ -60,27 +58,10 @@ const InputBox  = () => {
   }
 
   return(
-    <>
-      <form onSubmit={handleSubmit}>
-        <textarea onChange={handleInput}/>
-        <button type='submit'>Submit</button>
-      </form>
-      <div className = 'response'>
-        {loading?
-          <p className='loading-txt'>Let me think...</p>:<p>{daivResponse}</p>
-        }
-      </div>
-      {usageStats &&
-        <>
-          <h4>Usage</h4>
-          <ul>
-            <li>Prompt tokens: {usageStats.prompt_tokens}</li>
-            <li>Response tokens: {usageStats.completion_tokens}</li>
-            <li>Total tokens: {usageStats.total_tokens}</li>
-          </ul>
-        </>
-      }
-    </>
+    <form onSubmit={handleSubmit}>
+      <textarea onChange={handleInput}/>
+      <button type='submit'>Submit</button>
+    </form>
   )
 }
 export default InputBox;
