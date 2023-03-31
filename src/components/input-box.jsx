@@ -21,8 +21,8 @@ const InputBox  = () => {
       messages: [
         {role: 'user', content: userPrompt},
       ],
-      max_tokens: 500,
-      temperature: 0,
+      max_tokens: 2000,
+      temperature: 1,
     })
     console.log(response.data);
     setDaivResponse(response.data.choices[0].message.content)
