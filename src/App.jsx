@@ -1,14 +1,16 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { Configuration, OpenAIApi } from "openai";
+import InputBox from './components/input-box.jsx'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <div className="App">
-      <h1>This is DAIV</h1>
+      <h1>Hello, I am Daiv.</h1>
+      <h2>How can I help you?</h2>
+      <InputBox/>
     </div>
   )
 }
