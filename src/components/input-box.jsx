@@ -7,7 +7,7 @@ const InputBox  = () => {
   const orgId = import.meta.env.VITE_ORG_ID
   const [userPrompt, setUserPrompt] = useState(``)
   const [daivResponse, setDaivResponse] = useState(``)
-  const [totalTokens, setTotalTokens] = useState(0)
+  const [usageStats, setUsageStats] = useState(null)
   const [loading, setLoading] = useState(false)
   const URL = `http://localhost:3000`
 
@@ -41,12 +41,11 @@ const InputBox  = () => {
       max_tokens: 2000,
       temperature: 1,
     }
-
     const openai = new OpenAIApi(config)
     const response = await openai.createChatCompletion(promptObj)
     setDaivResponse(response.data.choices[0].message.content)
-    setTotalTokens(response.data.usage.total_tokens)
-    console.log(response);
+    console.log(response.data.usage);
+    setUsageStats(response.data.usage)
     writeToLog(response.data.usage, promptObj)
     setLoading(false)
   }
@@ -66,10 +65,21 @@ const InputBox  = () => {
         <textarea onChange={handleInput}/>
         <button type='submit'>Submit</button>
       </form>
-      {loading?
-        <p>Let me think...</p>:<p>{daivResponse}</p>
+      <div className = 'response'>
+        {loading?
+          <p className='loading-txt'>Let me think...</p>:<p>{daivResponse}</p>
+        }
+      </div>
+      {usageStats &&
+        <>
+          <h4>Usage</h4>
+          <ul>
+            <li>Prompt tokens: {usageStats.prompt_tokens}</li>
+            <li>Response tokens: {usageStats.completion_tokens}</li>
+            <li>Total tokens: {usageStats.total_tokens}</li>
+          </ul>
+        </>
       }
-      <p>Tokens used: {totalTokens}</p>
     </>
   )
 }

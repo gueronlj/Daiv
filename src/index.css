@@ -43,21 +43,64 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: grey;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: white;
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+form{
+  margin-left: 0px;
+  margin-right: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
+form button{
+  margin-top: 10px;
+  align-self: center;
+  max-width: 80px;
+  padding: 8px;
+}
 textarea{
-  width: 90vw;
+  font-family: Inter, system-ui, Avenir, Ariel, sans-serif;
+  font-size: 1em;
+  padding: 15px;
+  width: 80vw;
   height: 100px;
+  background-color: #4448;
+}
+
+h1{
+  margin-bottom: 20px;
+}
+h4{
+  margin-bottom: 5px;
+}
+.response{
+  background-color: #4448;
+  border: 1px solid grey;
+  padding: 15px;
+  width: 80vw;
+  margin: auto;
+  margin-top: 2em;
+}
+p{
+  text-align: left;
+  margin: 0;
+}
+.loading-txt{
+  text-align: center;
+}
+ul{
+  padding-left: 0;
+  list-style-type: none;
 }
 
 @media (prefers-color-scheme: light) {
