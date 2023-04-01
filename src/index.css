@@ -26,11 +26,16 @@ a:hover {
 body {
   margin: 0;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
-
+.main{
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -61,7 +66,6 @@ form{
   flex-direction: column;
   justify-content: center;
 }
-
 form button{
   margin-top: 10px;
   align-self: center;
@@ -80,8 +84,9 @@ textarea{
 h1{
   margin-bottom: 20px;
 }
-h4{
+h3{
   margin-bottom: 5px;
+  font-size: 1em
 }
 .response{
   background-color: #4448;
@@ -101,6 +106,27 @@ p{
 ul{
   padding-left: 0;
   list-style-type: none;
+}
+.header{
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+
+  width:100%;
+  border-bottom: 1px solid grey;
+  max-height: 40px;
+}
+.header a{
+  color: white;
+}
+
+.header a:hover{
+  color: grey;
+}
+.header ul{
+  padding-right: 2em;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 @media (prefers-color-scheme: light) {
