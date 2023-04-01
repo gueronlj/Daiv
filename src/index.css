@@ -33,6 +33,9 @@ body {
   min-height: 100vh;
 }
 .main{
+  margin:auto;
+  flex-direction: column;
+  max-width: 750px;
   padding-left: 2rem;
   padding-right: 2rem;
 }
@@ -42,7 +45,7 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
+  border-radius: 5px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
@@ -62,6 +65,7 @@ button:focus-visible {
 form{
   margin-left: 0px;
   margin-right: 0px;
+  margin-top: 1em;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -76,7 +80,6 @@ textarea{
   font-family: Inter, system-ui, Avenir, Ariel, sans-serif;
   font-size: 1em;
   padding: 15px;
-  width: 80vw;
   height: 100px;
   background-color: #4448;
 }
@@ -92,7 +95,6 @@ h3{
   background-color: #4448;
   border: 1px solid grey;
   padding: 15px;
-  width: 80vw;
   margin: auto;
   margin-top: 2em;
 }
