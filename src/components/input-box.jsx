@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Configuration, OpenAIApi } from 'openai';
 
-
 const InputBox  = (props) => {
   const apiKey = import.meta.env.VITE_API_KEY
   const orgId = import.meta.env.VITE_ORG_ID
+  const URL = import.meta.env.VITE_API_ENDPOINT
   const [userPrompt, setUserPrompt] = useState(``)
-  const URL = `http://localhost:3000`
 
   const writeToLog = async (costObj, promptObj) => {
     const payload = {
