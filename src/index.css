@@ -63,9 +63,7 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 form{
-  margin-left: 0px;
-  margin-right: 0px;
-  margin-top: 1em;
+  margin:auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -82,14 +80,17 @@ textarea{
   padding: 15px;
   height: 100px;
   background-color: #4448;
+  resize: none;
 }
 
 h1{
   margin-bottom: 20px;
+  font-weight: 400;
 }
 h3{
   margin-bottom: 5px;
-  font-size: 1em
+  font-size: 1em;
+  font-weight: 400;
 }
 .response{
   background-color: #4448;
@@ -129,6 +130,12 @@ ul{
   padding-right: 2em;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.finish-reason{
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
 }
 
 @media (prefers-color-scheme: light) {
