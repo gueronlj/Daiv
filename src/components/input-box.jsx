@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Configuration, OpenAIApi } from 'openai';
 
@@ -26,35 +26,48 @@ const InputBox  = (props) => {
   }
 
   const makeRequest = async() => {
-    props.setLoading(true)
-    const config = new Configuration({
-      apiKey: apiKey
-    })
-    const promptObj = {
-      model:'gpt-3.5-turbo',
-      messages: [
-        {role: 'user', content: userPrompt},
-      ],
-      max_tokens: 2000,
-      temperature: 1,
+    try{
+      props.setLoading(true);
+      props.setFinishReason(null);
+
+      const config = new Configuration({
+        apiKey: apiKey
+      })
+
+      const promptObj = {
+        model:'gpt-3.5-turbo',
+        messages: [
+          {role: 'user', content: userPrompt},
+        ],
+        max_tokens: 2000,
+        temperature: 1,
+      }
+
+      const openai = new OpenAIApi(config);
+      const response = await openai.createChatCompletion(promptObj);
+
+      props.setDaivResponse(response.data.choices[0].message.content);
+      props.setFinishReason(response.data.choices[0].finish_reason);
+      props.setUsageStats(response.data.usage);
+      writeToLog(response.data.usage, promptObj);
+      props.setLoading(false);
+    }catch(error){
+      console.log(error);
     }
-    const openai = new OpenAIApi(config)
-    const response = await openai.createChatCompletion(promptObj)
-    props.setDaivResponse(response.data.choices[0].message.content)
-    console.log(response.data.usage);
-    props.setUsageStats(response.data.usage)
-    writeToLog(response.data.usage, promptObj)
-    props.setLoading(false)
   }
 
   const handleInput = (e) => {
-    setUserPrompt(e.target.value)
+    setUserPrompt(e.target.value);
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    makeRequest()
+    makeRequest();
   }
+
+  useEffect(() => {
+    props.setFinishReason(null)
+  },[])
 
   return(
     <form onSubmit={handleSubmit}>
