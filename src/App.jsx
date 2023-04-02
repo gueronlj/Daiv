@@ -7,6 +7,7 @@ import InputBox from './components/input-box.jsx'
 import ResponseBox from './components/response-box.jsx'
 import UsageStats from './components/usage-stats.jsx'
 import Navbar from './components/navbar.jsx'
+import DrawerAppBar from './components/app-bar.jsx'
 
 function App() {
   const [daivResponse, setDaivResponse] = useState(``)

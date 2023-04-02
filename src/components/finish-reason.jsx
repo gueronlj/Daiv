@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import Alert from '@mui/material/Alert';
+
 const FinishReasonBox = (props) => {
   return (
     <div className='finish-reason'>
       {props.finishReason &&
         (props.finishReason === 'length'?
-          <p style={{color: 'yellow'}}>My response is incomplete! Try breaking down your problem into smaller parts.</p>:<p style={{color: 'green'}}>Completed</p>)
+          <Alert variant="filled" severity="warning">
+            Your prompt was too long. Make it shorter or more simple.<strong>Try breaking down your task into smaller parts.</strong>
+          </Alert>
+          :
+          <Alert variant="filled" severity="success">
+            <strong>Completed!</strong>
+          </Alert>)
       }
     </div>
   );

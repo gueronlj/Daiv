@@ -16,11 +16,12 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #1f7ef2;
   text-decoration: inherit;
 }
+
 a:hover {
-  color: #535bf2;
+  color: #175cb0;
 }
 
 body {
@@ -51,7 +52,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: grey;
+  background-color: #1f7ef2;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -85,6 +86,7 @@ textarea{
 
 h1{
   margin-bottom: 20px;
+  margin-top: 2em;
   font-weight: 400;
 }
 h3{
@@ -105,7 +107,9 @@ p{
 }
 .loading-txt{
   text-align: center;
+  margin-bottom: 2em;
 }
+
 ul{
   padding-left: 0;
   list-style-type: none;
@@ -114,9 +118,8 @@ ul{
   display: flex;
   flex-direction: row-reverse;
   align-items: flex-end;
-
+  background-color: #1f7ef2;
   width:100%;
-  border-bottom: 1px solid grey;
   max-height: 40px;
 }
 .header a{
@@ -124,7 +127,7 @@ ul{
 }
 
 .header a:hover{
-  color: grey;
+  color: #175cb0;
 }
 .header ul{
   padding-right: 2em;
@@ -135,8 +138,14 @@ ul{
 .finish-reason{
   display: flex;
   flex-direction: row;
-  padding: 5px;
+  margin-top: 10px;
+  justify-content:center;
 }
+
+.usage-stats h4{
+  margin-bottom: 0px;
+}
+
 
 @media (prefers-color-scheme: light) {
   :root {
