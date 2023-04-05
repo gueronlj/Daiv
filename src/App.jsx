@@ -8,6 +8,7 @@ import ResponseBox from './components/response-box.jsx'
 import UsageStats from './components/usage-stats.jsx'
 import Navbar from './components/navbar.jsx'
 import DrawerAppBar from './components/app-bar.jsx'
+import NewConvoButton from './components/new-conversation-btn.jsx'
 
 function App() {
   const [daivResponse, setDaivResponse] = useState(``)
@@ -31,6 +32,8 @@ function App() {
           loading={loading}
           daivResponse={daivResponse}
           finishReason={finishReason}/>
+        <NewConvoButton
+          setDaivResponse={setDaivResponse}/>
         {usageStats&&
           <UsageStats
             usageStats={usageStats}/>}

@@ -146,6 +146,11 @@ ul{
   margin-bottom: 0px;
 }
 
+.new-convo-btn{
+  margin-top: 10px;
+  padding: 10px;
+}
+
 
 @media (prefers-color-scheme: light) {
   :root {
