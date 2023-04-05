@@ -7,6 +7,10 @@ const InputBox  = (props) => {
   const orgId = import.meta.env.VITE_ORG_ID
   const URL = import.meta.env.VITE_API_ENDPOINT
   const [userPrompt, setUserPrompt] = useState(``)
+  const QUESTION1 = localStorage.getItem('Q1')
+  const QUESTION2 = localStorage.getItem('Q2')
+  const ANSWER1 = localStorage.getItem('A1')
+  const ANSWER2 = localStorage.getItem('A2')
 
   const writeToLog = async (costObj, promptObj) => {
     const payload = {
@@ -24,6 +28,25 @@ const InputBox  = (props) => {
       console.log(error);
     }
   }
+  /* NOTE: bot remembers context. could drift after 2nd or 3rd prompt.
+    TODO: Make button to reset conversation context*/
+  const addToLocalStorage = (question, answer) => {
+    QUESTION1 !== '' ? localStorage.setItem("Q2", `Q: ${question}`):localStorage.setItem("Q1", `Q: ${question}`)
+    ANSWER1 !== '' ? localStorage.setItem("A2", `A: ${answer}`):localStorage.setItem("A1", `A: ${answer}`)
+    if (QUESTION2 !== '' && ANSWER2 !== ''){
+      localStorage.clear()
+      localStorage.setItem("Q1", `Q: ${question}`)
+      localStorage.setItem("A1", `A: ${answer}`)
+    }
+  }
+
+  const fillMessageContent = (userInput) => {
+    if (QUESTION1 && ANSWER1){
+      return `${QUESTION1} ${ANSWER1} ${userInput}`
+    } else {
+      return userInput
+    }
+  }
 
   const makeRequest = async() => {
     try{
@@ -37,10 +60,10 @@ const InputBox  = (props) => {
       const promptObj = {
         model:'gpt-3.5-turbo',
         messages: [
-          {role: 'user', content: userPrompt},
+          {role: 'user', content: fillMessageContent(userPrompt)},
         ],
         max_tokens: 2000,
-        temperature: 1,
+        temperature: 0.7,
       }
 
       const openai = new OpenAIApi(config);
@@ -50,6 +73,7 @@ const InputBox  = (props) => {
       props.setFinishReason(response.data.choices[0].finish_reason);
       props.setUsageStats(response.data.usage);
       writeToLog(response.data.usage, promptObj);
+      addToLocalStorage(userPrompt, response.data.choices[0].message.content)
       props.setLoading(false);
     }catch(error){
       console.log(error);
