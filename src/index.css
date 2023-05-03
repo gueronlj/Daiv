@@ -21,7 +21,7 @@ a {
 }
 
 a:hover {
-  color: #175cb0;
+  color: #747bff;
 }
 
 body {
@@ -57,7 +57,7 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: white;
+  background-color: #747bff;
 }
 button:focus,
 button:focus-visible {
@@ -160,7 +160,12 @@ ul{
   a:hover {
     color: #747bff;
   }
+
+  button:hover {
+    background-color: #747bff;
+  }
+
   button {
-    background-color: #f9f9f9;
+    background-color:  #1f7ef2;
   }
 }
