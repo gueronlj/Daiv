@@ -71,12 +71,16 @@ const InputBox  = (props) => {
 
       props.setDaivResponse(response.data.choices[0].message.content);
       props.setFinishReason(response.data.choices[0].finish_reason);
+      //props.showToast(response.data.choices[0].finish_reason);
+      props.setHasResponded(true)
       props.setUsageStats(response.data.usage);
       writeToLog(response.data.usage, promptObj);
       addToLocalStorage(userPrompt, response.data.choices[0].message.content)
       props.setLoading(false);
     }catch(error){
       console.log(error);
+      props.setLoading(false)
+      props.showErrorToast(error.message)
     }
   }
 
