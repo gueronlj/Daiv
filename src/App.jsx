@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect} from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -9,12 +9,35 @@ import UsageStats from './components/usage-stats.jsx'
 import Navbar from './components/navbar.jsx'
 import DrawerAppBar from './components/app-bar.jsx'
 import NewConvoButton from './components/new-conversation-btn.jsx'
+import CopyBtn from './components/copy-btn.jsx'
+import FinishReasonBox from './components/finish-reason.jsx';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [daivResponse, setDaivResponse] = useState(``)
   const [usageStats, setUsageStats] = useState(null)
   const [loading, setLoading] = useState(false)
   const [finishReason, setFinishReason] = useState(null)
+  const [hasResponded, setHasResponded] = useState(false)
+
+  // const showToast = (reason) => {
+  //   if (reason === 'length'){
+  //     toast.error('Your prompt was too long. Shorten or simplify your prompt', {
+  //       position: toast.POSITION.TOP_CENTER
+  //     });
+  //   } else {
+  //     toast.success('Success Notification !', {
+  //       position: toast.POSITION.BOTTOM_CENTER
+  //     });
+  //   }
+  // };
+  const showErrorToast = (error) => {
+    toast.error('Your prompt was too long. Try breaking it into smaller parts.',{
+      position: toast.POSITION.BOTTOM_CENTER
+    });
+  }
+
   return (
     <>
       <Navbar/>
@@ -27,16 +50,28 @@ function App() {
           usageStats={usageStats}
           setUsageStats={setUsageStats}
           setLoading={setLoading}
-          setFinishReason={setFinishReason}/>
+          setFinishReason={setFinishReason}
+          setHasResponded={setHasResponded}
+          showErrorToast={showErrorToast}/>
         <ResponseBox
           loading={loading}
           daivResponse={daivResponse}
           finishReason={finishReason}/>
-        <NewConvoButton
-          setDaivResponse={setDaivResponse}/>
-        {usageStats&&
+        {hasResponded && <>
+          <div className="toolbar">
+            <CopyBtn
+              textToCopy={daivResponse}/>
+            <NewConvoButton
+              setDaivResponse={setDaivResponse}
+              setHasResponded={setHasResponded}/>
+            <FinishReasonBox
+              finishReason={finishReason}/>
+          </div>
+        </>}
+        {usageStats &&
           <UsageStats
             usageStats={usageStats}/>}
+        <ToastContainer/>
       </div>
     </>
   )

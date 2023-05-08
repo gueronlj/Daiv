@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import FinishReasonBox from './finish-reason.jsx';
 import CircularProgress from '@mui/material/CircularProgress';
 
 const ResponseBox = (props) => {
@@ -11,8 +10,6 @@ const ResponseBox = (props) => {
         :
         <p>{props.daivResponse}</p>}
     </div>
-    <FinishReasonBox
-      finishReason={props.finishReason}/>
   </>)
 }
 
