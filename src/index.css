@@ -37,18 +37,22 @@ body {
   margin:auto;
   flex-direction: column;
   max-width: 750px;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
 
+.help{
+  color: #1f7ef2;
+}
+
 button {
-  border-radius: 5px;
+  border-radius: 3px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  padding: 10px;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
@@ -138,7 +142,7 @@ ul{
 .finish-reason{
   display: flex;
   flex-direction: row;
-  margin-top: 10px;
+  align-items: center;
   justify-content:center;
 }
 
@@ -148,19 +152,24 @@ ul{
 
 .new-convo-btn{
   margin-top: 10px;
-  padding: 10px;
 }
 
-.toolbar > *{
+.toolbar > *, .response-toolbar > *{
   margin: .5em;
+  padding: 7px;
 }
 
 .toolbar{
+  margin-top: 25px;
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: flex-end;
 }
 
+.toolbar button{
+  margin-left: 20px;
+}
 
 @media (prefers-color-scheme: light) {
   :root {
