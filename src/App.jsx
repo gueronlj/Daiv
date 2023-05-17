@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react'
+import { useState, useEffect, useRef} from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -21,6 +21,10 @@ function App() {
   const [finishReason, setFinishReason] = useState(null)
   const [hasResponded, setHasResponded] = useState(false)
 
+  const settings = useRef({
+    temperature: .01
+  })
+
   // const showToast = (reason) => {
   //   if (reason === 'length'){
   //     toast.error('Your prompt was too long. Shorten or simplify your prompt', {
@@ -32,6 +36,7 @@ function App() {
   //     });
   //   }
   // };
+
   const showErrorToast = (error) => {
     toast.error('Your prompt was too long. Try breaking it into smaller parts.',{
       position: toast.POSITION.BOTTOM_CENTER
@@ -52,21 +57,22 @@ function App() {
           setLoading={setLoading}
           setFinishReason={setFinishReason}
           setHasResponded={setHasResponded}
-          showErrorToast={showErrorToast}/>
+          showErrorToast={showErrorToast}
+          settings={settings.current}/>
         <ResponseBox
           loading={loading}
           daivResponse={daivResponse}
           finishReason={finishReason}/>
         {hasResponded && <>
-          <div className="toolbar">
+          <div className="response-toolbar">
             <CopyBtn
               textToCopy={daivResponse}/>
             <NewConvoButton
               setDaivResponse={setDaivResponse}
               setHasResponded={setHasResponded}/>
-            <FinishReasonBox
-              finishReason={finishReason}/>
           </div>
+          <FinishReasonBox
+            finishReason={finishReason}/>
         </>}
         {usageStats &&
           <UsageStats

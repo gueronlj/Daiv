@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Configuration, OpenAIApi } from 'openai';
+import Slider from '@mui/material/Slider';
 
 const InputBox  = (props) => {
   const apiKey = import.meta.env.VITE_API_KEY
@@ -11,6 +12,8 @@ const InputBox  = (props) => {
   const QUESTION2 = localStorage.getItem('Q2')
   const ANSWER1 = localStorage.getItem('A1')
   const ANSWER2 = localStorage.getItem('A2')
+
+  const [sliderValue, setSliderValue] = useState(0.7)
 
   const writeToLog = async (costObj, promptObj) => {
     const payload = {
@@ -63,12 +66,11 @@ const InputBox  = (props) => {
           {role: 'user', content: fillMessageContent(userPrompt)},
         ],
         max_tokens: 2000,
-        temperature: 0.7,
+        temperature: props.settings.temperature,
       }
 
       const openai = new OpenAIApi(config);
       const response = await openai.createChatCompletion(promptObj);
-
       props.setDaivResponse(response.data.choices[0].message.content);
       props.setFinishReason(response.data.choices[0].finish_reason);
       //props.showToast(response.data.choices[0].finish_reason);
@@ -77,6 +79,7 @@ const InputBox  = (props) => {
       writeToLog(response.data.usage, promptObj);
       addToLocalStorage(userPrompt, response.data.choices[0].message.content)
       props.setLoading(false);
+      console.log(promptObj);
     }catch(error){
       console.log(error);
       props.setLoading(false)
@@ -93,6 +96,11 @@ const InputBox  = (props) => {
     makeRequest();
   }
 
+  const handleChange = (event, newValue) => {
+    setSliderValue(newValue);
+    props.settings.temperature = newValue
+  }
+
   useEffect(() => {
     props.setFinishReason(null)
   },[])
@@ -100,7 +108,23 @@ const InputBox  = (props) => {
   return(
     <form onSubmit={handleSubmit}>
       <textarea onChange={handleInput}/>
-      <button type='submit'>Submit</button>
+      <div className="toolbar">
+        <p>Temperature<span className="help">(?)</span></p>
+        <Slider
+          aria-label="Temperature"
+          size="medium"
+          defaultValue={0.7}
+          step={0.1}
+          min={0}
+          max={2}
+          valueLabelDisplay="on"
+          onChange={handleChange}
+          value={sliderValue}
+          sx={{
+            color:"#1f7ef2"
+          }}/>
+        <button type='submit'>Submit</button>
+      </div>
     </form>
   )
 }
