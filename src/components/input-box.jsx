@@ -65,7 +65,7 @@ const InputBox  = (props) => {
         messages: [
           {role: 'user', content: fillMessageContent(userPrompt)},
         ],
-        max_tokens: 2000,
+        max_tokens: 10000,
         temperature: props.settings.temperature,
       }
 
