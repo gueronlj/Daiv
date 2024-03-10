@@ -65,23 +65,22 @@ const InputBox  = (props) => {
         messages: [
           {role: 'user', content: fillMessageContent(userPrompt)},
         ],
-        max_tokens: 7000,
+        max_tokens: 4096,
         temperature: props.settings.temperature,
       }
 
       const openai = new OpenAIApi(config);
-      const response = await openai.createChatCompletion(promptObj);
-      props.setDaivResponse(response.data.choices[0].message.content);
-      props.setFinishReason(response.data.choices[0].finish_reason);
+      const response = await openai.createChatCompletion(promptObj)
+      props.setDaivResponse(response.data?.choices[0].message.content);
+      props.setFinishReason(response.data?.choices[0].finish_reason);
       //props.showToast(response.data.choices[0].finish_reason);
       props.setHasResponded(true)
-      props.setUsageStats(response.data.usage);
-      writeToLog(response.data.usage, promptObj);
-      addToLocalStorage(userPrompt, response.data.choices[0].message.content)
+      props.setUsageStats(response.data?.usage);
+      writeToLog(response.data?.usage, promptObj);
+      addToLocalStorage(userPrompt, response.data?.choices[0].message.content)
       props.setLoading(false);
       console.log(promptObj);
     }catch(error){
-      console.log(error);
       props.setLoading(false)
       props.showErrorToast(error.message)
     }
